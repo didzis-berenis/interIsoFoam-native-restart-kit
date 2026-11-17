@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-17",
+  "runtime": {
+    "version": "v2606",
+    "options": "linux64GccDPInt32Opt",
+    "solver": "/usr/lib/openfoam/openfoam2606/platforms/linux64GccDPInt32Opt/bin/interIsoFoam",
+    "solver_sha256": "696a3ca65e2fa0384ec472d7d7bb97da139e04bed978acfb4d3215d36da8c73d"
+  },
+  "controller_sha256": "8385bf9e96fc1591c0544fd83517a41e6c3772bb78466f6b8cb5b202440f0522",
+  "tests": [
+    {
+      "test": "serial-laminar",
+      "status": "PASS",
+      "ranks": 1,
+      "model": "laminar",
+      "adaptive": false,
+      "field_rank_comparisons": 12,
+      "max_abs": 0.0,
+      "evidence": "serial-laminar-comparison.json"
+    },
+    {
+      "test": "parallel-laminar",
+      "status": "PASS",
+      "ranks": 2,
+      "model": "laminar",
+      "adaptive": false,
+      "field_rank_comparisons": 24,
+      "max_abs": 0.0,
+      "evidence": "parallel-laminar-comparison.json"
+    },
+    {
+      "test": "serial-kOmegaSST",
+      "status": "PASS",
+      "ranks": 1,
+      "model": "kOmegaSST",
+      "adaptive": false,
+      "field_rank_comparisons": 17,
+      "max_abs": 0.0,
+      "evidence": "serial-kOmegaSST-comparison.json"
+    },
+    {
+      "test": "parallel-kOmegaSST-adaptive-nonadjustable-output",
+      "status": "PASS",
+      "ranks": 2,
+      "model": "kOmegaSST",
+      "adaptive": true,
+      "field_rank_comparisons": 34,
+      "max_abs": 0.0,
+      "evidence": "parallel-kOmegaSST-adaptive-comparison.json",
+      "checkpoint": "0.0062300837068799998",
+      "final": "0.019499320537907198"
+    }
+  ],
+  "typed_checkpoint_read": "PASS (standalone postProcess, same MPI count, functions-empty dictionary, pre/post source hashes)",
+  "protection_tests": "negative-checks.json",
+  "known_failed_configuration": "adaptive-adjustable-FAIL.json",
+  "not_run": [
+    "v2406 executable/runtime test",
+    "64-rank production case",
+    "real Slurm submission/deadline/cancellation",
+    "moving/adaptive mesh",
+    "other time schemes or turbulence models",
+    "node-failure recovery"
+  ],
+  "scope": "Numerical restart regression for supported fixtures; not independent physical validation.",
+  "final_code_continuation_check": {
+    "status": "PASS",
+    "field_rank_comparisons": 34,
+    "max_abs": 0.0,
+    "evidence": "final-code-comparison.json"
+  }
+}

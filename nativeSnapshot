@@ -1,0 +1,162 @@
+// Native restart snapshots, separate from normal solver output. Static mesh v1.
+nativeSnapshot
+{
+    type coded;
+    libs (utilityFunctionObjects);
+    name interIsoNativeSnapshotV1;
+    executeControl timeStep;
+    executeInterval 1;
+    writeControl none;
+    codeInclude
+    #{
+        #include "fvCFD.H"
+        #include "IFstream.H"
+        #include "OFstream.H"
+        #include <fstream>
+        #include <iomanip>
+        #include <ctime>
+    #};
+    codeData
+    #{
+        word last_;
+        bool ended_=false;
+        bool restored_=false;
+        template<class Field>
+        bool capture(const word& name, const fileName& folder, std::ostream& receipt)
+        {
+            if (!mesh().foundObject<Field>(name)) return false;
+            const Field& root=mesh().lookupObject<Field>(name);
+            const Field* f=&root;
+            const label n=root.nOldTimes();
+            for (label i=0; i<=n; ++i)
+            {
+                OFstream os(folder/f->name(), IOstreamOption(IOstreamOption::BINARY));
+                os.precision(17);
+                f->writeHeader(os);
+                const bool ok=f->writeData(os);
+                IOobject::writeEndDivider(os);
+                os.flush();
+                if (!ok || !os.good()) FatalErrorInFunction << "Snapshot field write failed: " << f->name() << exit(FatalError);
+                receipt << "{\"name\":\"" << f->name() << "\",\"root\":\"" << name
+                        << "\",\"class\":\"" << Field::typeName << "\",\"level\":" << i << "},";
+                if (i<n) f=&f->oldTime();
+            }
+            return true;
+        }
+        template<class Field>
+        bool restore(const word& name)
+        {
+            if (!mesh().foundObject<Field>(name)) return false;
+            Field saved(IOobject(name, mesh().time().timeName(),mesh(),IOobject::MUST_READ,IOobject::NO_WRITE,false),mesh());
+            Field* dst=&mesh().lookupObjectRef<Field>(name);
+            const Field* src=&saved;
+            const label n=saved.nOldTimes();
+            for (label i=0; i<=n; ++i)
+            {
+                *dst == *src;
+                if (i<n) {dst=&dst->oldTime(); src=&src->oldTime();}
+            }
+            return true;
+        }
+        void snapshot(const word& reason)
+        {
+            Time& t=const_cast<Time&>(mesh().time());
+            if (last_==t.timeName()) return;
+            const fileName base=t.globalPath()/".native-restart"/"snapshots"/t.timeName();
+            fileName root=base;
+            if (Pstream::parRun()) root/= "processor"+Foam::name(Pstream::myProcNo());
+            const fileName folder=root/t.timeName();
+            if (isDir(folder)) FatalErrorInFunction << "Refusing to overwrite snapshot: " << folder << exit(FatalError);
+            mkDir(folder/"uniform");
+            std::ostringstream fields;
+            IFstream ci(t.globalPath()/"system/nativeRestartControls");dictionary cfg(ci);
+            const wordList required(cfg.get<wordList>("requiredFields"));
+            const wordList optional(cfg.get<wordList>("optionalFields"));
+            for (const word& name : required)
+            {
+                bool found=capture<volScalarField>(name,folder,fields)
+                    || capture<volVectorField>(name,folder,fields)
+                    || capture<surfaceScalarField>(name,folder,fields)
+                    || capture<volSymmTensorField>(name,folder,fields);
+                if (!found) FatalErrorInFunction << "Required restart field missing: " << name << exit(FatalError);
+            }
+            for (const word& name : optional)
+            {
+                capture<volScalarField>(name,folder,fields)
+                    || capture<volVectorField>(name,folder,fields)
+                    || capture<surfaceScalarField>(name,folder,fields)
+                    || capture<volSymmTensorField>(name,folder,fields);
+            }
+            {
+                OFstream os(folder/"uniform/time");os.precision(17);
+                os << "FoamFile {version 2.0;format ascii;class dictionary;object time;}\n"
+                   << "value " << t.value() << ";\nname \"" << t.timeName() << "\";\nindex " << t.timeIndex()
+                   << ";\ndeltaT " << t.deltaTValue() << ";\ndeltaT0 " << t.deltaT0Value() << ";\n";
+                os.flush();
+                if (!os.good()) FatalErrorInFunction << "Time metadata write failed" << exit(FatalError);
+            }
+            bool ok=true; reduce(ok,andOp<bool>());
+            std::string entries=fields.str();if(!entries.empty())entries.pop_back();
+            std::ofstream done((folder/"native-ready.json").c_str());
+            done << std::setprecision(17) << "{\"version\":1,\"time\":" << t.value()
+                 << ",\"label\":\"" << t.timeName() << "\",\"rank\":" << Pstream::myProcNo()
+                 << ",\"ranks\":" << Pstream::nProcs() << ",\"reason\":\"" << reason
+                 << "\",\"fields\":[" << entries << "]}\n";
+            done.flush();ok=bool(done);done.close();ok=ok&&!done.fail();reduce(ok,andOp<bool>());
+            if (!ok) FatalErrorInFunction << "Snapshot receipt failed" << exit(FatalError);
+            last_=t.timeName();
+            Info<< "NATIVE_SNAPSHOT_COMPLETE reason=" << reason << " time=" << t.timeName() << " ranks=" << Pstream::nProcs() << endl;
+        }
+    #};
+    codeRead
+    #{
+        const Time& t=mesh().time();
+        IFstream ci(t.globalPath()/"system/nativeRestartControls");dictionary cfg(ci);
+        if (cfg.getOrDefault<bool>("restore",false) && !restored_)
+        {
+            if(t.timeIndex()!=t.startTimeIndex() || t.value()<=0) FatalErrorInFunction << "Restoration is startup-only" << exit(FatalError);
+            const wordList names(cfg.get<wordList>("restoreFields"));
+            for (const word& name:names)
+            {
+                const bool ok=restore<volScalarField>(name)||restore<volVectorField>(name)
+                    ||restore<surfaceScalarField>(name)||restore<volSymmTensorField>(name);
+                if(!ok) FatalErrorInFunction << "Cannot restore field: " << name << exit(FatalError);
+            }
+            restored_=true;
+            Info<< "NATIVE_REFERENCE_RESTORED time=" << t.timeName() << endl;
+        }
+    #};
+    codeExecute
+    #{
+        Time& t=const_cast<Time&>(mesh().time());
+        if (mesh().dynamic()) FatalErrorInFunction << "V1 supports static meshes only" << exit(FatalError);
+        bool stop=false,write=false;
+        if(Pstream::master())
+        {
+            IFstream ci(t.globalPath()/"system/nativeRestartControls");dictionary cfg(ci);
+            const scalar st=cfg.getOrDefault<scalar>("stopAtTime",-1);
+            const scalar cp=cfg.getOrDefault<scalar>("checkpointAtTime",-1);
+            const scalar epoch=cfg.getOrDefault<scalar>("stopEpoch",-1);
+            stop=isFile(t.globalPath()/"system/NATIVE_STOP")
+                || (st>=0 && t.value()>=st-SMALL*t.deltaTValue())
+                || (epoch>0 && scalar(std::time(nullptr))>=epoch);
+            write=isFile(t.globalPath()/"system/NATIVE_CHECKPOINT")
+                || (cp>=0 && t.value()>=cp-SMALL*t.deltaTValue() && last_.empty());
+        }
+        reduce(stop,orOp<bool>());reduce(write,orOp<bool>());
+        if(stop && !ended_)
+        {
+            snapshot("safeStop"); ended_=true;
+            t.setEndTime(t.value());
+        }
+        else if(write && !ended_)
+        {
+            snapshot("checkpoint");
+            if(Pstream::master() && isFile(t.globalPath()/"system/NATIVE_CHECKPOINT")) rm(t.globalPath()/"system/NATIVE_CHECKPOINT");
+        }
+    #};
+    codeEnd
+    #{
+        if(!ended_ && mesh().time().value()>0) snapshot("final");
+    #};
+}

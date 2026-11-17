@@ -1,0 +1,176 @@
+{
+  "status": "PASS",
+  "atol": 1e-12,
+  "rtol": 1e-08,
+  "reference": "/validation/runs/fixed-step-tests/ras-baseline2/.native-restart/snapshots/0.012000000000000004",
+  "candidate": "/validation/runs/fixed-step-tests/ras-resume2/.native-restart/snapshots/0.012000000000000004",
+  "fields": [
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 27501,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "U"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 27501,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "U_0"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 9298,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "alpha.air"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 9074,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "alpha.water"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 9074,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "alpha.water_0"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 9396,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "k"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 9396,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "k_0"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 9174,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "nut"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 9396,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "omega"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 9396,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "omega_0"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 9488,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "p"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 9492,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "p_rgh"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 18031,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "phi"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 18031,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "phi_0"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 9298,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "rho"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 18031,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "rhoPhi"
+    },
+    {
+      "max_abs": 0.0,
+      "rms_abs": 0.0,
+      "relative_l2": 0.0,
+      "values": 9298,
+      "outside_tolerance": 0,
+      "rank": 0,
+      "field": "rho_0"
+    }
+  ],
+  "extra_histories": [
+    {
+      "rank": 0,
+      "reference_only": [],
+      "candidate_only": [
+        "U_0_0",
+        "alpha.water_0_0",
+        "k_0_0",
+        "omega_0_0",
+        "phi_0_0",
+        "rho_0_0"
+      ]
+    }
+  ]
+}

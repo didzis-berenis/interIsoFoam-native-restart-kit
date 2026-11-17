@@ -1,0 +1,238 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2606                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _481094f-20260618 OPENFOAM=2606 version=2606
+Arch   : "LSB;label=32;scalar=64"
+Exec   : interIsoFoam -case /validation/runs/selftest/resumed -parallel
+Date   : Nov 17 2026
+Time   : 15:19:58
+Host   : validation-host
+PID    : 2824696
+I/O    : uncollated
+Case   : /validation/runs/selftest/resumed
+nProcs : 2
+Hosts  :
+(
+    (validation-host 2)
+)
+Pstream initialized with:
+    node communication : off [type=host] (2 ranks, 1 nodes)
+    topology controls  : none
+    consensus exchange : 0 (tuning: 0)
+    exchange algorithm : 0
+    commsType          : nonBlocking
+    polling iterations : 0
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+memory pool : not available
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+
+--> FOAM Warning : allowSystemOperations : Allowing user-supplied system call operations.
+                   This can be a security risk if running untrusted cases
+                   through e.g. 'coded' on-the-fly-compilation functionality.
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0.0062300837068799998
+
+Selecting dynamicFvMesh staticFvMesh
+
+PIMPLE: Operating solver in PISO mode
+
+Reading field p_rgh
+
+Reading field U
+
+Reading/calculating face flux field phi
+
+Reading transportProperties
+
+Selecting incompressible transport model Newtonian
+Selecting incompressible transport model Newtonian
+Selecting turbulence model type RAS
+Selecting RAS turbulence model kOmegaSST
+Selecting patchDistMethod meshWave
+RAS
+{
+    RASModel        kOmegaSST;
+    turbulence      on;
+    printCoeffs     on;
+    alphaK1         0.84999999999999998;
+    alphaK2         1;
+    alphaOmega1     0.5;
+    alphaOmega2     0.85599999999999998;
+    gamma1          0.55555555555555558;
+    gamma2          0.44;
+    beta1           0.074999999999999997;
+    beta2           0.082799999999999999;
+    betaStar        0.089999999999999997;
+    a1              0.31;
+    b1              1;
+    c1              10;
+    F3              false;
+    decayControl    false;
+    kInf            0;
+    omegaInf        0;
+}
+
+
+Reading g
+
+Reading hRef
+Calculating field g.h
+
+No MRF models present
+
+No finite volume options present
+Selecting reconstructionScheme: isoAlpha
+DICPCG:  Solving for pcorr, Initial residual = 0.99999999999612377, Final residual = 9.4718801463355711e-11, No Iterations 191
+time step continuity errors : sum local = 3.7743560136522326e-19, global = 6.1374645846716578e-22, cumulative = 6.1374645846716578e-22
+Courant Number mean: 0.0056232089646320038 max: 0.070983116563489934
+
+Starting time loop
+
+Using dynamicCode for functionObject nativeSnapshot at line 60 in "/validation/runs/selftest/resumed/system/controlDict/functions/nativeSnapshot"
+Could not load "/validation/runs/selftest/resumed/dynamicCode/platforms/linux64GccDPInt32Opt/lib/libinterIsoNativeSnapshotV1_560f0d9e7d3c2956ce41d1c45350f7b5db2bca36.so"
+/validation/runs/selftest/resumed/dynamicCode/platforms/linux64GccDPInt32Opt/lib/libinterIsoNativeSnapshotV1_560f0d9e7d3c2956ce41d1c45350f7b5db2bca36.so: cannot open shared object file: No such file or directory
+Creating new library in "dynamicCode/interIsoNativeSnapshotV1/platforms/linux64GccDPInt32Opt/lib/libinterIsoNativeSnapshotV1_560f0d9e7d3c2956ce41d1c45350f7b5db2bca36.so"
+Invoking wmake libso /validation/runs/selftest/resumed/dynamicCode/interIsoNativeSnapshotV1
+wmake libso /validation/runs/selftest/resumed/dynamicCode/interIsoNativeSnapshotV1
+    ln: ./lnInclude
+    dep: functionObjectTemplate.C
+    Ctoo: functionObjectTemplate.C
+    link: /validation/runs/selftest/resumed/dynamicCode/interIsoNativeSnapshotV1/../platforms/linux64GccDPInt32Opt/lib/libinterIsoNativeSnapshotV1_560f0d9e7d3c2956ce41d1c45350f7b5db2bca36.so
+NATIVE_REFERENCE_RESTORED time=0.0062300837068799998
+Courant Number mean: 0.0056231955860784029 max: 0.070983075021991901
+Interface Courant Number mean: 0.00010770682228760853 max: 0.065839687912272168
+deltaT = 0.001486016741376
+Time = 0.0077161004482560001
+
+PIMPLE: iteration 1
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 1.3967405010362199e-10
+Phase-1 volume fraction = 0.1247688595503658  Min(alpha.water) = 0  Max(alpha.water) = 1
+GAMG:  Solving for p_rgh, Initial residual = 0.0056648392299030329, Final residual = 1.7431816558062767e-05, No Iterations 1
+time step continuity errors : sum local = 2.2282247882682297e-05, global = 1.2021964186103797e-07, cumulative = 1.2021964186103858e-07
+GAMG:  Solving for p_rgh, Initial residual = 1.9778922088743725e-05, Final residual = 6.2347433853623827e-07, No Iterations 4
+time step continuity errors : sum local = 7.9360330869836664e-07, global = 1.8044110236385406e-07, cumulative = 3.0066074422489264e-07
+GAMG:  Solving for p_rgh, Initial residual = 7.317645085085079e-07, Final residual = 8.5408879287233772e-10, No Iterations 8
+time step continuity errors : sum local = 1.0880527501338627e-09, global = -9.7527444959406882e-10, cumulative = 2.9968546977529855e-07
+smoothSolver:  Solving for omega, Initial residual = 0.0010999927528530986, Final residual = 5.5695521441144804e-13, No Iterations 3
+smoothSolver:  Solving for k, Initial residual = 0.27245400184573815, Final residual = 4.2478645701179419e-13, No Iterations 4
+ExecutionTime = 0.10000000000000001 s  ClockTime = 19 s
+
+Courant Number mean: 0.0083730741293471956 max: 0.10515050671124866
+Interface Courant Number mean: 0.00017703933811952626 max: 0.10140810810225158
+deltaT = 0.0017832200896511999
+Time = 0.0094993205379072
+
+PIMPLE: iteration 1
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 2.1187651633169935e-10
+Phase-1 volume fraction = 0.12476885954914343  Min(alpha.water) = 0  Max(alpha.water) = 1
+GAMG:  Solving for p_rgh, Initial residual = 0.008259155740143893, Final residual = 2.6983490157333842e-05, No Iterations 1
+time step continuity errors : sum local = 4.7269328307708111e-05, global = 1.6484114755790817e-07, cumulative = 4.6452661733320672e-07
+GAMG:  Solving for p_rgh, Initial residual = 2.99696391540824e-05, Final residual = 9.758595179445591e-07, No Iterations 4
+time step continuity errors : sum local = 1.6991792387187793e-06, global = 4.5836684088825626e-07, cumulative = 9.2289345822146298e-07
+GAMG:  Solving for p_rgh, Initial residual = 1.2927914245666396e-06, Final residual = 8.0407151986889978e-10, No Iterations 9
+time step continuity errors : sum local = 1.4018295369435663e-09, global = 1.3899437927535062e-09, cumulative = 9.2428340201421652e-07
+smoothSolver:  Solving for omega, Initial residual = 0.0013424869793895186, Final residual = 1.969590129570376e-12, No Iterations 3
+smoothSolver:  Solving for k, Initial residual = 0.2831779032538474, Final residual = 1.4100422152975828e-12, No Iterations 4
+ExecutionTime = 0.14000000000000001 s  ClockTime = 19 s
+
+Courant Number mean: 0.012378806998790202 max: 0.1544069186849146
+Interface Courant Number mean: 0.00028814460810256602 max: 0.15167177669415011
+deltaT = 0.002
+Time = 0.0114993205379072
+
+PIMPLE: iteration 1
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + 5.6581406226996478e-12
+Phase-1 volume fraction = 0.1247688595491129  Min(alpha.water) = 0  Max(alpha.water) = 1
+GAMG:  Solving for p_rgh, Initial residual = 0.011274567770509862, Final residual = 4.1841872021238247e-05, No Iterations 1
+time step continuity errors : sum local = 8.8656806784040995e-05, global = 1.8454790196559284e-07, cumulative = 1.1088313039798094e-06
+GAMG:  Solving for p_rgh, Initial residual = 4.5448897931734409e-05, Final residual = 1.4145439986023272e-06, No Iterations 4
+time step continuity errors : sum local = 2.9727232677706129e-06, global = 8.7107787034760018e-07, cumulative = 1.9799091743274095e-06
+GAMG:  Solving for p_rgh, Initial residual = 2.1332230581511841e-06, Final residual = 6.0572963530826919e-10, No Iterations 10
+time step continuity errors : sum local = 1.2752197333684688e-09, global = 1.2561284106924112e-09, cumulative = 1.9811653027381019e-06
+smoothSolver:  Solving for omega, Initial residual = 0.0015318619549078319, Final residual = 5.6168846395820629e-12, No Iterations 3
+smoothSolver:  Solving for k, Initial residual = 0.26329950479827152, Final residual = 3.2357854610467104e-12, No Iterations 4
+ExecutionTime = 0.16 s  ClockTime = 19 s
+
+Courant Number mean: 0.01679204357875129 max: 0.20447380189053582
+Interface Courant Number mean: 0.00041365504824728179 max: 0.20087940920494091
+deltaT = 0.002
+Time = 0.0134993205379072
+
+PIMPLE: iteration 1
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + -1.021183138050219e-12
+Phase-1 volume fraction = 0.12476885954911276  Min(alpha.water) = 0  Max(alpha.water) = 0.99999999999897882
+GAMG:  Solving for p_rgh, Initial residual = 0.013633449152492459, Final residual = 5.4885668153520034e-05, No Iterations 1
+time step continuity errors : sum local = 0.00011363972359481979, global = 1.3614547079542669e-07, cumulative = 2.1173107735335287e-06
+GAMG:  Solving for p_rgh, Initial residual = 5.8849023972707627e-05, Final residual = 1.7629556664399347e-06, No Iterations 4
+time step continuity errors : sum local = 3.6144211529854798e-06, global = 1.1195273766858451e-06, cumulative = 3.2368381502193737e-06
+GAMG:  Solving for p_rgh, Initial residual = 2.8603890059950058e-06, Final residual = 8.1372127362922509e-10, No Iterations 10
+time step continuity errors : sum local = 1.6719164896154465e-09, global = 1.645803700025608e-09, cumulative = 3.2384839539193993e-06
+smoothSolver:  Solving for omega, Initial residual = 0.0015580130282104713, Final residual = 9.599561726074683e-12, No Iterations 3
+smoothSolver:  Solving for k, Initial residual = 0.22548963326145424, Final residual = 3.9700492460422724e-12, No Iterations 4
+ExecutionTime = 0.17999999999999999 s  ClockTime = 19 s
+
+Courant Number mean: 0.019665414676683694 max: 0.22597168003315671
+Interface Courant Number mean: 0.00052417370960854864 max: 0.22206032371857148
+deltaT = 0.002
+Time = 0.0154993205379072
+
+PIMPLE: iteration 1
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + -2.4462654124590699e-12
+Phase-1 volume fraction = 0.12476885954911279  Min(alpha.water) = 0  Max(alpha.water) = 0.99999999999755373
+GAMG:  Solving for p_rgh, Initial residual = 0.016167799226491586, Final residual = 6.7200444715541377e-05, No Iterations 1
+time step continuity errors : sum local = 0.00013620223426889373, global = 9.9651186945223107e-08, cumulative = 3.3381351408646223e-06
+GAMG:  Solving for p_rgh, Initial residual = 7.1495829347508345e-05, Final residual = 2.1396112143826569e-06, No Iterations 4
+time step continuity errors : sum local = 4.2869442768089729e-06, global = 1.3466977882980601e-06, cumulative = 4.6848329291626819e-06
+GAMG:  Solving for p_rgh, Initial residual = 3.5920926680457639e-06, Final residual = 4.9652156655631809e-10, No Iterations 11
+time step continuity errors : sum local = 9.9735967394227242e-10, global = 9.8117275841547363e-10, cumulative = 4.685814101921097e-06
+smoothSolver:  Solving for omega, Initial residual = 0.0015818323708337236, Final residual = 1.5523726882790987e-11, No Iterations 3
+smoothSolver:  Solving for k, Initial residual = 0.19152146502485376, Final residual = 4.6343640816813115e-12, No Iterations 4
+ExecutionTime = 0.20999999999999999 s  ClockTime = 19 s
+
+Courant Number mean: 0.022507232832279362 max: 0.23876807739435885
+Interface Courant Number mean: 0.00059666873834204079 max: 0.23493380022093668
+deltaT = 0.002
+Time = 0.0174993205379072
+
+PIMPLE: iteration 1
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + -3.4142688676297439e-12
+Phase-1 volume fraction = 0.12476885954911292  Min(alpha.water) = 0  Max(alpha.water) = 0.99999999999658573
+GAMG:  Solving for p_rgh, Initial residual = 0.018909598603502845, Final residual = 7.982239748587376e-05, No Iterations 1
+time step continuity errors : sum local = 0.00015842751836005219, global = 7.1160022120578605e-08, cumulative = 4.7569741240416758e-06
+GAMG:  Solving for p_rgh, Initial residual = 8.4502112630795788e-05, Final residual = 2.5273856583364834e-06, No Iterations 4
+time step continuity errors : sum local = 4.9498207026241027e-06, global = 1.5682211860222717e-06, cumulative = 6.3251953100639478e-06
+GAMG:  Solving for p_rgh, Initial residual = 4.3854883444285036e-06, Final residual = 6.0697154979947777e-10, No Iterations 11
+time step continuity errors : sum local = 1.1921910218433749e-09, global = 1.1728011554878554e-09, cumulative = 6.3263681112194359e-06
+smoothSolver:  Solving for omega, Initial residual = 0.0016035092062465527, Final residual = 2.3938426693497627e-11, No Iterations 3
+smoothSolver:  Solving for k, Initial residual = 0.1526193348444658, Final residual = 4.9978486294976994e-12, No Iterations 4
+ExecutionTime = 0.23000000000000001 s  ClockTime = 19 s
+
+Courant Number mean: 0.025319941040691497 max: 0.24421674171842675
+Interface Courant Number mean: 0.00066697110019516958 max: 0.24050927456832052
+deltaT = 0.002
+Time = 0.019499320537907198
+
+PIMPLE: iteration 1
+isoAdvection: After conservative bounding: min(alpha) = 0, max(alpha) = 1 + -4.6368464623469663e-12
+Phase-1 volume fraction = 0.12476885954911265  Min(alpha.water) = 0  Max(alpha.water) = 0.99999999999536315
+GAMG:  Solving for p_rgh, Initial residual = 0.02178944347421315, Final residual = 9.2791889597785695e-05, No Iterations 1
+time step continuity errors : sum local = 0.0001801764462813964, global = 5.1444044670686737e-08, cumulative = 6.3778121558901227e-06
+GAMG:  Solving for p_rgh, Initial residual = 9.7968294249669113e-05, Final residual = 2.9248221697548679e-06, No Iterations 4
+time step continuity errors : sum local = 5.59274500222798e-06, global = 1.7904810434723109e-06, cumulative = 8.1682931993624333e-06
+GAMG:  Solving for p_rgh, Initial residual = 5.1812676825939295e-06, Final residual = 7.277383314249397e-10, No Iterations 11
+time step continuity errors : sum local = 1.39612374698715e-09, global = 1.3734081344697756e-09, cumulative = 8.169666607496903e-06
+smoothSolver:  Solving for omega, Initial residual = 0.0016236286752079555, Final residual = 3.5393553232957127e-11, No Iterations 3
+smoothSolver:  Solving for k, Initial residual = 0.12450743233664975, Final residual = 5.421078754976732e-12, No Iterations 4
+ExecutionTime = 0.26000000000000001 s  ClockTime = 19 s
+
+NATIVE_SNAPSHOT_COMPLETE reason=final time=0.019499320537907198 ranks=2
+End
+
+Finalising parallel run

@@ -1,0 +1,26 @@
+[
+  {
+    "test": "truncated_snapshot_refused",
+    "status": "PASS",
+    "refusal": "STOP: Snapshot changed: processor0/0.0062300837068799998/U"
+  },
+  {
+    "test": "existing_destination_refused",
+    "status": "PASS",
+    "refusal": "STOP: Output must be a NEW folder with an existing parent"
+  },
+  {
+    "test": "adaptive_adjustable_output_refused",
+    "status": "PASS",
+    "refusal": "STOP: Adaptive stepping with adjustable output shifts its scheduling origin on restart. V1 refuses it; use an independently tested non-adjustable output schedule from the beginning."
+  },
+  {
+    "test": "duplicate_run_refused",
+    "status": "PASS",
+    "refusal": "STOP: [Errno 17] File exists: '/validation/runs/selftest-safe/baseline/NATIVE_RUN_STARTED.json'"
+  },
+  {
+    "test": "valid_time_metadata_seal",
+    "status": "PASS"
+  }
+]

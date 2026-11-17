@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "runtime": {
+    "version": "v2606",
+    "options": "linux64GccDPInt32Opt",
+    "solver": "/usr/lib/openfoam/openfoam2606/platforms/linux64GccDPInt32Opt/bin/interIsoFoam",
+    "solver_sha256": "696a3ca65e2fa0384ec472d7d7bb97da139e04bed978acfb4d3215d36da8c73d"
+  },
+  "ranks": 2,
+  "model": "kOmegaSST",
+  "adaptive": true,
+  "checkpoint": "0.0062300837068799998",
+  "final": "0.019499320537907198",
+  "comparison": "comparison.json"
+}

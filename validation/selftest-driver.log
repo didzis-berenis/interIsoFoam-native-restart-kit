@@ -1,0 +1,49 @@
+functions
+{
+}
+endTime         0.02;
+deltaT          0.0002;
+adjustTimeStep  true;
+maxDeltaT       0.002;
+writeControl    timeStep;
+writeInterval   100000;
+numberOfSubdomains 2;
+n               ( 2 1 1 );
+application     interIsoFoam;
+startFrom       startTime;
+startTime       0;
+stopAt          endTime;
+purgeWrite      0;
+writeFormat     binary;
+writeCompression off;
+writePrecision  17;
+timePrecision   17;
+runTimeModifiable true;
+PREPARED /validation/runs/selftest/baseline
+Running: mpirun -np 2 interIsoFoam -case /validation/runs/selftest/baseline -parallel
+SOLVER_ENDED; seal its exact final snapshot before relying on it
+application     interIsoFoam;
+startFrom       startTime;
+startTime       0;
+stopAt          endTime;
+purgeWrite      0;
+writeFormat     binary;
+writeCompression off;
+writePrecision  17;
+timePrecision   17;
+runTimeModifiable true;
+PREPARED /validation/runs/selftest/split
+Running: mpirun -np 2 interIsoFoam -case /validation/runs/selftest/split -parallel
+SOLVER_ENDED; seal its exact final snapshot before relying on it
+SEALED /validation/runs/selftest/baseline/.native-restart/snapshots/0.019499320537907198
+SEALED /validation/runs/selftest/split/.native-restart/snapshots/0.0062300837068799998
+startFrom       startTime;
+startTime       0.00623008;
+stopAt          endTime;
+PREPARED RESUME /validation/runs/selftest/resumed
+TYPED_READ_PASS
+Running: mpirun -np 2 interIsoFoam -case /validation/runs/selftest/resumed -parallel
+SOLVER_ENDED; seal its exact final snapshot before relying on it
+SEALED /validation/runs/selftest/resumed/.native-restart/snapshots/0.019499320537907198
+PASS field/rank comparisons: 34 max_abs: 0.0
+SELFTEST PASS /validation/runs/selftest
